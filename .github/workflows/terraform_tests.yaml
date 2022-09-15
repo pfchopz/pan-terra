@@ -3,10 +3,12 @@ on:
   - push
 
 jobs:
-  build:
+  Terraform_Init:
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - name: terraform
-        uses: robertdebock/terraform-action@1.1.3
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.9
