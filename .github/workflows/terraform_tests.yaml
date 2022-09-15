@@ -2,13 +2,25 @@
 on:
   - push
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
-  Terraform_Init:
+  Terraform:
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: terraform
+      - name: terraform install
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.2.9
+      - name: terraform init
+        run: terraform init
+      - name: terraform fmt
+        run: terraform fmt -check
+      - name: terraform validate
+        run: terraform validate
+      - name: terraform plan
+        run: terraform plan
