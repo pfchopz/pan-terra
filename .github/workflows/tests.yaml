@@ -1,0 +1,41 @@
+---
+on:
+  - push
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  Terraform:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: terraform install
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.9
+      - name: terraform init
+        run: terraform init
+      - name: terraform fmt
+        run: terraform fmt -check
+      - name: terraform validate
+        run: terraform validate
+      - name: terraform plan
+        run: terraform plan
+  Scripts:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: set_variables
+        run: source scripts/set_variables.sh 'admin' 'Password432!' '10.2.2' 'full' 'oregon' 'm5.xlarge' 'ABC123' 'pan'
+      - name: curl_probe
+        run: ./scripts/curl_probe.sh google.com
+      - name: create_user
+        run: ./scripts/create_user.sh fake_key.pem
+      - name: backup_config
+        run: ./scripts/backup_config.sh admin password google.com
+      - name: restore_config
+        run: ./scripts/restore_config.sh admin password google.com

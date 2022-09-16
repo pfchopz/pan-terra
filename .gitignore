@@ -1,5 +1,5 @@
 *terraform*
-!terraform_tests.yaml
 go.*
 test*
 *.pem
+!tests.yaml
