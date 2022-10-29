@@ -30,7 +30,7 @@ variable "license" { # Must select 'full' or 'partial'
   */
 }
 
-variable "region_id" { # Select AWS Region, choose "Ohio", "West Virginia", "Oregon", or "California"
+variable "region_id" { # Select AWS Region, choose "Ohio", "Virginia", "Oregon", or "California"
   type    = string
   default = "oregon"
 }

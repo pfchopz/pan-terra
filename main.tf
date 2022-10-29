@@ -31,6 +31,11 @@ resource "aws_instance" "pan" { # Create EC2 instance of Palo Alto Firewall
   instance_type = var.instance_type
   key_name      = aws_key_pair.kp.key_name
 
+
+  root_block_device { # Required to delete EBS on instance termination
+    delete_on_termination = true
+  }
+
   tags = {
     Name = "Palo Alto"
   }
